@@ -41,7 +41,21 @@ public class RedBoxMachine
       // Complete the method to search for a movie.
       // If placement is -1, then the movie isn't there.
       // Find the index of i if the movie is there.
-      return 1;
+      ArrayList<String> searchList = new ArrayList<String>();
+      int index = -1;
+      for (int i = 0; i < dvdList.size(); i++)
+      {
+         searchList.add(dvdList.get(i).getTitle());
+      }
+      for (int i = 0; i < searchList.size(); i++)
+      {
+         if (searchList.get(i).equals(title))
+         {
+            index = i;
+            return index;
+         }
+      }
+      return index;
    }
 
    /** Returns the titles of all available DVD's in
@@ -70,7 +84,14 @@ public class RedBoxMachine
    public boolean rent(String title)
    {
       // Complete the method to rent a movie.
-      return true;
+      for (int i = 0; i < dvdList.size(); i++)
+      {
+         if (dvdList.get(i).getTitle().equals(title))
+         {
+            return true;
+         }
+      }
+      return false;
    }
 
    /** Allows a customer to return a movie. When the movie is returned, the number
@@ -79,19 +100,19 @@ public class RedBoxMachine
     *  @param title the title of the movie being returned.
     *  @return the DVD that was returned by the customer.
     */
-   public boolean returnMovie(String title) // used to be type DVD
+   public DVD returnMovie(String title) // used to be type DVD
    {
       // Complete the method to return a movie.
       boolean toReturn = dvdList.contains(title);
-      int location = dvdList.indexOf(title);
       if (!toReturn)
       {
          dvdList.add(new DVD(title));
-         return true;
+         return dvdList.get(dvdList.size() - 1);
       }
       // dvdList.get(toReturn).incrementCopies();
+      int location = dvdList.indexOf(title);
       dvdList.get(location).incrementCopies();
-      return true;
+      return dvdList.get(location);
    }
 
    /** This method fills the machine with movies. You do not have

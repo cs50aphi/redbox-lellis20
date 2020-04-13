@@ -39,6 +39,14 @@ public class RedBoxUI
             // Complete the code to rent a movie. This code should let the user
             // know if the movie was rented successfully or not (not could occur if
             // the movie they enter is not available).
+            if (rm.rent(title) == true)
+            {
+               System.out.println("This movie is available. Please take it below.");
+            }
+            else
+            {
+               System.out.println("Sorry, this movie is not available. Please select one from the list.");
+            }
          }
          else if(option == 3)
          {
@@ -56,6 +64,15 @@ public class RedBoxUI
          {
             System.out.println("What movie would you like to search for?");
             title = sn.nextLine();
+            int index = rm.searchForMovie(title);
+            if (index == -1)
+            {
+               System.out.println("Sorry, we could not find " + title + " at this kiosk. " + index);
+            }
+            else
+            {
+               System.out.println("Yes, " + title + " is available in this kiosk.");
+            }
 
             // Complete the code to search for a movie.  Make sure to include
             // messages that inform the user whether the movie was found or not.
