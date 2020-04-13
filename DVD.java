@@ -62,7 +62,7 @@ public class DVD
 
    public String toString()
    {
-      return title + "copies: " + copies;
+      return title + " copies: " + copies;
    }
 
 }
