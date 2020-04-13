@@ -41,16 +41,15 @@ public class RedBoxMachine
       // Complete the method to search for a movie.
       // If placement is -1, then the movie isn't there.
       // Find the index of i if the movie is there.
-      ArrayList<String> searchList = new ArrayList<String>();
+
+      // -1 is value for if not found
       int index = -1;
+      // Iterate through titles for a match to search query
       for (int i = 0; i < dvdList.size(); i++)
       {
-         searchList.add(dvdList.get(i).getTitle());
-      }
-      for (int i = 0; i < searchList.size(); i++)
-      {
-         if (searchList.get(i).equals(title))
+         if (dvdList.get(i).getTitle().equals(title))
          {
+            // Returning index of dvdList where matching title was found
             index = i;
             return index;
          }
@@ -66,6 +65,7 @@ public class RedBoxMachine
    public ArrayList<String> getAvailableMovies()
    {
       // Complete the method to get all available movie titles.
+      // Makes ArrayList of Strings called 'list', uses toString() of DVD to make strings of title + copies
       ArrayList<String> list = new ArrayList<String>();
       for (int i = 0; i < dvdList.size(); i++)
       {
@@ -84,10 +84,18 @@ public class RedBoxMachine
    public boolean rent(String title)
    {
       // Complete the method to rent a movie.
+      // Iterates through dvdList titles for a match to rent query
       for (int i = 0; i < dvdList.size(); i++)
       {
+         // If a match is found, decrements copies remaining
          if (dvdList.get(i).getTitle().equals(title))
          {
+            dvdList.get(i).decrementCopies();
+            // If that was copies of this movie is now 0, it removes from dvdList
+            if (dvdList.get(i).getNumCopies() == 0)
+            {
+               dvdList.remove(i);
+            }
             return true;
          }
       }
@@ -103,16 +111,19 @@ public class RedBoxMachine
    public DVD returnMovie(String title) // used to be type DVD
    {
       // Complete the method to return a movie.
-      boolean toReturn = dvdList.contains(title);
-      if (!toReturn)
+      // Iterates through dvdList
+      for (int i = 0; i < dvdList.size(); i++)
       {
-         dvdList.add(new DVD(title));
-         return dvdList.get(dvdList.size() - 1);
+         // If a match is found for movie title, this increments amount of copies for that title
+         if (dvdList.get(i).getTitle().equals(title))
+         {
+            dvdList.get(i).incrementCopies();
+            return dvdList.get(i);
+         }
       }
-      // dvdList.get(toReturn).incrementCopies();
-      int location = dvdList.indexOf(title);
-      dvdList.get(location).incrementCopies();
-      return dvdList.get(location);
+      // If no match is found, it adds on a new DVD object at end of dvdList
+      dvdList.add(new DVD(title));
+      return dvdList.get(dvdList.size() - 1);
    }
 
    /** This method fills the machine with movies. You do not have

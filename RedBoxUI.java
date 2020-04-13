@@ -21,6 +21,7 @@ public class RedBoxUI
       {
          printMenu();
          option = Integer.parseInt(sn.nextLine());
+         // CHECK AVAILABLE TITLES
          if(option == 1)
          {
             //Complete the code to List Available Titles.
@@ -31,6 +32,7 @@ public class RedBoxUI
             System.out.println("PRESS ENTER TO GO BACK TO THE MENU");
             sn.nextLine();
          }
+         // RENT
          else if(option == 2)
          {
             System.out.println("What movie would you like to rent?");
@@ -39,15 +41,17 @@ public class RedBoxUI
             // Complete the code to rent a movie. This code should let the user
             // know if the movie was rented successfully or not (not could occur if
             // the movie they enter is not available).
-            if (rm.rent(title) == true)
+            if (rm.rent(title))
             {
                System.out.println("This movie is available. Please take it below.");
             }
             else
             {
+               // No need check if available, won't be an object on dvdList if it's not available
                System.out.println("Sorry, this movie is not available. Please select one from the list.");
             }
          }
+         // RETURN
          else if(option == 3)
          {
             System.out.println("What movie would you like to return?");
@@ -60,15 +64,18 @@ public class RedBoxUI
             // message after the movie has been returned.
 
          }
+         // SEARCH FOR MOVIE TITLE
          else if(option == 4)
          {
             System.out.println("What movie would you like to search for?");
             title = sn.nextLine();
             int index = rm.searchForMovie(title);
+            // -1 indicates no match was found
             if (index == -1)
             {
                System.out.println("Sorry, we could not find " + title + " at this kiosk. " + index);
             }
+            // Any non -1 value means a match was found
             else
             {
                System.out.println("Yes, " + title + " is available in this kiosk.");
@@ -80,7 +87,7 @@ public class RedBoxUI
          }
          else if(option == 5)
          {
-            System.out.println("Thanks for using Redbox!");
+            System.out.println("Thank you for using Redbox!");
             System.out.println("Have a great day and come back soon!");
             System.exit(0);
          }
@@ -94,6 +101,7 @@ public class RedBoxUI
    //Prints all available options to the console.
    public static void printMenu()
    {
+      System.out.println();
       System.out.println("1-List Available Titles");
       System.out.println("2-Rent Movie");
       System.out.println("3-Return Movie");
